@@ -12,5 +12,5 @@ Learning Golang(https://golang.org/) for api implementation and ReactJS(https://
 5. Run `cd src/github.com/ipastushenko/simple-chat`
 
 ### develoment server cycle commands
-6. Run `go install` for compile and install server in docker container
-7. Run `simple-chat` for start of server
+6. Run `go install` for compiling and installing of server in docker container
+7. Run `simple-chat` for starting of server
