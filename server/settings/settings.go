@@ -7,4 +7,5 @@ type Server struct {
 type Config struct {
     Env string
     Server Server `json:"server"`
+    ApiVersion string `json:"apiVersion"`
 }

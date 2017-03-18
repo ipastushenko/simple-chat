@@ -5,6 +5,7 @@ import (
     "log"
     "encoding/json"
     "io/ioutil"
+    "fmt"
 )
 
 const (
@@ -13,7 +14,7 @@ const (
 
 func Load(conf *Config) {
     conf.Env = Env()
-    data, err := ioutil.ReadFile(configPath + conf.Env + ".json")
+    data, err := ioutil.ReadFile(fmt.Sprintf("%v%v.json", configPath, conf.Env))
     if err != nil {
         log.Println(err.Error())
         os.Exit(1)

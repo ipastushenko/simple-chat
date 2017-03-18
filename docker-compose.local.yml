@@ -1,0 +1,4 @@
+version: '2'
+services:
+  server:
+    command: /bin/bash -c "tail -f /var/log/dmesg"

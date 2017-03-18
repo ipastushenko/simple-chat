@@ -29,3 +29,4 @@ _testmain.go
 # env files
 .go.env
 /server/settings/*.json
+docker-compose.override.yml

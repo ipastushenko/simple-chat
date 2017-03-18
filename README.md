@@ -8,7 +8,7 @@ Learning Golang(https://golang.org/) for api implementation and ReactJS(https://
 3. Run `docker-compose up -d`
 
 ### run docker container for compiling and running of server
-4. Run `docker-compose run --rm server bash`
+4. Run `docker-compose exec server bash`
 5. Run `cd src/github.com/ipastushenko/simple-chat`
 
 ### env and config files
