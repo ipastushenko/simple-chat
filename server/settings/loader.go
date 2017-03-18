@@ -12,8 +12,8 @@ const (
     configPath = "settings/"
 )
 
-func Load(conf *Config) {
-    conf.Env = Env()
+func load(conf *Config) {
+    conf.Env = goEnv()
     data, err := ioutil.ReadFile(fmt.Sprintf("%v%v.json", configPath, conf.Env))
     if err != nil {
         log.Println(err.Error())

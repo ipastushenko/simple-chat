@@ -7,7 +7,7 @@ const (
   envName string = "GO_ENV"
 )
 
-func Env() string {
+func goEnv() string {
     env, ok := os.LookupEnv(envName)
 
     if ok {

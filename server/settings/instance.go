@@ -12,7 +12,7 @@ var (
 func GetInstance() *Config {
     once.Do(func() {
         conf = &Config{}
-        Load(conf)
+        load(conf)
     })
 
     return conf
