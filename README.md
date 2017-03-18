@@ -11,6 +11,12 @@ Learning Golang(https://golang.org/) for api implementation and ReactJS(https://
 4. Run `docker-compose run --rm server bash`
 5. Run `cd src/github.com/ipastushenko/simple-chat`
 
+### env and config files
+6. Run `cp .go.env.example .go.env`
+6. Modify `.go.env` file as you wish
+7. Run `cp server/settings/env.json.example server/settings/development.json`
+7. Modify `development.json` file as you wish
+
 ### develoment server cycle commands
-6. Run `go install` for compiling and installing of server in docker container
+7. Run `go install` for compiling and installing of server in docker container
 7. Run `simple-chat` for starting of server

@@ -25,3 +25,7 @@ _testmain.go
 
 # vim
 *.swp
+
+# env files
+.go.env
+/server/settings/*.json

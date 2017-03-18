@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "github.com/ipastushenko/simple-chat/settings"
+)
 
 func main () {
-    fmt.Println("Simple Chat")
+    config := settings.GetInstance()
+    fmt.Println(config.Env)
+    fmt.Println(config.Server.Port)
 }
