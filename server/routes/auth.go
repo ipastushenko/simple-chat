@@ -5,7 +5,10 @@ import (
     "github.com/ipastushenko/simple-chat/controllers"
 )
 
-func AuthRouter(router *mux.Router) {
-    router.HandleFunc("/auth/sign_in", controllers.SignIn).Methods("POST")
+func AppendAuthAuthRouter(router *mux.Router) {
     router.HandleFunc("/auth/sign_out", controllers.SignOut).Methods("GET")
+}
+
+func AppendAnonymousAuthRouter(router *mux.Router) {
+    router.HandleFunc("/auth/sign_in", controllers.SignIn).Methods("POST")
 }

@@ -2,23 +2,27 @@ package main
 
 import (
     "log"
+    "fmt"
+    "net/http"
     "github.com/ipastushenko/simple-chat/settings"
     "github.com/ipastushenko/simple-chat/routes"
     "github.com/ipastushenko/simple-chat/middleware"
-    "github.com/urfave/negroni"
-    "net/http"
-    "fmt"
 )
 
 func main () {
     config := settings.GetInstance()
     router := routes.Router()
-    serverMiddleware := negroni.New()
-    serverMiddleware.Use(negroni.NewRecovery())
-    serverMiddleware.Use(negroni.NewLogger())
-    serverMiddleware.Use(negroni.HandlerFunc(middleware.JsonResponse))
+    serverMiddleware := middleware.Middleware()
     serverMiddleware.UseHandler(router)
-    log.Println(config.Env)
-    log.Println(config.Server.Port)
-    http.ListenAndServe(fmt.Sprintf(":%v", config.Server.Port), serverMiddleware)
+    log.Printf(
+        "%v server has been started on %v port",
+        config.Env,
+        config.Server.Port,
+    )
+    log.Fatal(
+        http.ListenAndServe(
+            fmt.Sprintf(":%v", config.Server.Port),
+            serverMiddleware,
+        ),
+    )
 }

@@ -1,17 +1,30 @@
 package routes
 
 import (
-    "github.com/gorilla/mux"
-    "github.com/ipastushenko/simple-chat/settings"
     "fmt"
+    "github.com/gorilla/mux"
+    "github.com/urfave/negroni"
+    "github.com/ipastushenko/simple-chat/middleware"
+    "github.com/ipastushenko/simple-chat/settings"
 )
 
 func Router() *mux.Router {
     config := settings.GetInstance()
-    router := mux.NewRouter()
-    router = router.PathPrefix(fmt.Sprintf("/api/%v",config.ApiVersion)).Subrouter()
+    apiPath := fmt.Sprintf("/api/%v",config.ApiVersion)
 
-    AuthRouter(router)
+    router := mux.NewRouter()
+    authRouter := mux.NewRouter().PathPrefix(apiPath).Subrouter()
+    anonymousRouter := router.PathPrefix(apiPath).Subrouter()
+
+    AppendAuthAuthRouter(authRouter)
+    AppendAnonymousAuthRouter(anonymousRouter)
+
+    router.PathPrefix(apiPath).Handler(
+        negroni.New(
+            negroni.HandlerFunc(middleware.RequireAuth),
+            negroni.Wrap(authRouter),
+        ),
+    )
 
     return router
 }
