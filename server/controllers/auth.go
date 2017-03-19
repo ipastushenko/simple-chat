@@ -35,6 +35,11 @@ func SignIn(rw http.ResponseWriter, req *http.Request) {
 }
 
 func SignOut(rw http.ResponseWriter, req *http.Request) {
-    response := signOutResponse{req.Context().Value("user_id").(int)}
+    userId, ok := req.Context().Value(auth.UserIdContextName).(int);
+    if !ok {
+        rw.WriteHeader(http.StatusUnauthorized)
+        return
+    }
+    response := signOutResponse{userId}
     json.NewEncoder(rw).Encode(response)
 }

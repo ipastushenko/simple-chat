@@ -14,8 +14,24 @@ type jwtTokenSecret struct {
     verifyKey *rsa.PublicKey
 }
 
+type TokenClaims struct {
+    StandardClaims *jwt.StandardClaims
+    UserId int `json:"user_id"`
+}
+
+func (claims TokenClaims) Valid () error {
+    return claims.StandardClaims.Valid()
+}
+
+const (
+    UserIdContextName string = "user_id"
+)
+
 //TODO: test user
-var password, _ = bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
+var password, _ = bcrypt.GenerateFromPassword(
+    []byte("password"),
+    bcrypt.DefaultCost,
+)
 var testUser = &models.User{
     Username: "test",
     Password: string(password),
@@ -23,23 +39,30 @@ var testUser = &models.User{
 }
 
 func Authenticate(user *models.User) (string, bool) {
-    if user.Username == testUser.Username {
-        if bcrypt.CompareHashAndPassword([]byte(testUser.Password), []byte(user.Password)) == nil {
-            token, err := generateToken(testUser)
-            if err != nil {
-                return "", false
-            }
-            return token, true
+    comparePasswords := bcrypt.CompareHashAndPassword(
+        []byte(testUser.Password),
+        []byte(user.Password),
+    )
+
+    if user.Username == testUser.Username && comparePasswords == nil {
+        token, err := generateToken(testUser)
+        if err != nil {
+            return "", false
         }
+        return token, true
     }
 
     return "", false
 }
 
 func VerifyToken(tokenString string) (*jwt.Token, bool) {
-    token, err := jwt.Parse(tokenString, func (token *jwt.Token) (interface{}, error) {
-        return secret.verifyKey, nil
-    })
+    token, err := jwt.ParseWithClaims(
+        tokenString,
+        &TokenClaims {},
+        func (*jwt.Token) (interface{}, error) {
+            return secret.verifyKey, nil
+        },
+    )
     if err == nil && token.Valid {
         return token, true
     }
@@ -50,13 +73,18 @@ func VerifyToken(tokenString string) (*jwt.Token, bool) {
 func generateToken(user *models.User) (string, error) {
     config := settings.GetInstance()
     token := jwt.New(jwt.SigningMethodRS256)
-    iat := time.Now()
-    exp := iat.Add(time.Duration(config.Server.TokenExpiration) * time.Minute).Unix()
-    claims := make(jwt.MapClaims)
-    claims["exp"] = exp
-    claims["iat"] = iat.Unix()
-    claims["user_id"] = user.Id
-    token.Claims = claims
+    timeNow := time.Now()
+    exp := timeNow.Add(
+            time.Duration(config.Server.TokenExpiration) * time.Minute,
+        ).Unix()
+    iat := timeNow.Unix()
+    token.Claims = &TokenClaims{
+        StandardClaims: &jwt.StandardClaims{
+            ExpiresAt: exp,
+            IssuedAt: iat,
+        },
+        UserId: user.Id,
+    }
     tokenString, err := token.SignedString(secret.secretKey)
 
     if err != nil {
