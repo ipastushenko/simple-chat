@@ -30,3 +30,4 @@ _testmain.go
 .go.env
 /server/settings/*.json
 docker-compose.override.yml
+/server/settings/secret

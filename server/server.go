@@ -7,10 +7,12 @@ import (
     "github.com/ipastushenko/simple-chat/settings"
     "github.com/ipastushenko/simple-chat/routes"
     "github.com/ipastushenko/simple-chat/middleware"
+    "github.com/ipastushenko/simple-chat/services/auth"
 )
 
 func main () {
     config := settings.GetInstance()
+    auth.LoadSecretKeys()
     router := routes.Router()
     serverMiddleware := middleware.Middleware()
     serverMiddleware.UseHandler(router)
