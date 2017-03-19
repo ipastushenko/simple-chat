@@ -1,4 +1,6 @@
 version: '2'
 services:
   server:
+    ports:
+      - 8080:8080
     command: /bin/bash -c "tail -f /var/log/dmesg"

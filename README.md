@@ -4,6 +4,7 @@ Learning Golang(https://golang.org/) for api implementation and ReactJS(https://
 # Development env
 ### setup and build docker containers
 1. Setup docker(https://www.docker.com/) and docker-compose(https://docs.docker.com/compose/)
+1. Run `cp docker-compose.local.yml docker-compose.override.yml`
 1. Run `docker-compose build`
 1. Run `docker-compose up -d`
 
