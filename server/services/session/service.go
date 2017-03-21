@@ -39,8 +39,9 @@ func (service *SessionService) SignIn(
     if !ok {
         return nil, false
     }
-    claims := &token.JWTClaims{UserId: user.Id}
-    token, err := service.tokenService.GenerateToken(claims)
+    info := make(map[string]interface{})
+    info["user_id"] = user.Id
+    token, err := service.tokenService.GenerateToken(info)
     if err != nil {
         return nil, false
     }

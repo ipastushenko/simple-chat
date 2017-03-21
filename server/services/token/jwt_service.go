@@ -3,7 +3,6 @@ package token
 import (
     "net/http"
     "crypto/rsa"
-    "errors"
     "sync"
     "time"
     "io/ioutil"
@@ -16,7 +15,7 @@ import (
 
 type JWTClaims struct {
     jwt.StandardClaims
-    UserId int `json:"user_id"`
+    Info interface{}
 }
 
 type JWTService struct {
@@ -29,11 +28,10 @@ type jwtSecret struct {
 }
 
 const (
-    userIdContextName string = "user_id"
+    userIdContextName string = "info"
 )
 
 var (
-    ErrJWTClaimsCast = errors.New("Cast JWTClaims error")
     service *JWTService
     once sync.Once
 )
@@ -42,7 +40,7 @@ func NewJWTService() ITokenService {
     return getInstance()
 }
 
-func (service *JWTService) GenerateToken(claims interface{}) (string, error) {
+func (service *JWTService) GenerateToken(info interface{}) (string, error) {
     config := settings.GetInstance()
     token := jwt.New(jwt.SigningMethodRS256)
 
@@ -50,13 +48,10 @@ func (service *JWTService) GenerateToken(claims interface{}) (string, error) {
     expirationTime := time.Duration(config.Server.TokenExpiration)
     exp := timeNow.Add(expirationTime * time.Minute).Unix()
     iat := timeNow.Unix()
-    tokenClaims, ok := claims.(*JWTClaims)
-    if !ok {
-        return "", ErrJWTClaimsCast
+    token.Claims = &JWTClaims{
+        Info: info,
+        StandardClaims: jwt.StandardClaims{IssuedAt: iat, ExpiresAt: exp},
     }
-    tokenClaims.ExpiresAt = exp
-    tokenClaims.IssuedAt = iat
-    token.Claims = tokenClaims
 
     return token.SignedString(service.secret.secretKey)
 }
@@ -93,10 +88,16 @@ func (service *JWTService) UpdateRequestContext(
     newContext := context.WithValue(
         currentContext,
         userIdContextName,
-        claims.UserId,
+        claims.Info,
     )
 
     return request.WithContext(newContext)
+}
+
+func (service *JWTService) GetRequestContextInfo(
+    request *http.Request,
+) interface{} {
+    return request.Context().Value(userIdContextName)
 }
 
 //TODO: need to implement

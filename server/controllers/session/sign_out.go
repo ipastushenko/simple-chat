@@ -4,11 +4,13 @@ import(
     "net/http"
     "encoding/json"
     "github.com/ipastushenko/simple-chat/services/session"
+    "github.com/ipastushenko/simple-chat/services/token"
 )
 
 //TODO: temp signout handler response
 type SignOutHandler struct {
     sessionService session.ISessionService
+    tokenService token.ITokenService
 }
 
 type signOutResponse struct {
@@ -18,6 +20,7 @@ type signOutResponse struct {
 func NewSignOutHandler() *SignOutHandler {
     return &SignOutHandler{
         sessionService: session.NewSessionService(),
+        tokenService: token.NewJWTService(),
     }
 }
 
@@ -25,12 +28,6 @@ func (handler *SignOutHandler) ServeHTTP(
     responseWriter http.ResponseWriter,
     request *http.Request,
 ) {
-    userId, ok := request.Context().Value("user_id").(int);
-    if !ok {
-        responseWriter.WriteHeader(http.StatusUnauthorized)
-        return
-    }
-
-    response := &signOutResponse{UserId: userId}
-    json.NewEncoder(responseWriter).Encode(response)
+    info := handler.tokenService.GetRequestContextInfo(request)
+    json.NewEncoder(responseWriter).Encode(info)
 }
