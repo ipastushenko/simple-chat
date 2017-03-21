@@ -2,13 +2,13 @@ package routes
 
 import (
     "github.com/gorilla/mux"
-    "github.com/ipastushenko/simple-chat/controllers"
+    "github.com/ipastushenko/simple-chat/controllers/session"
 )
 
 func appendAuthAuthRouter(router *mux.Router) {
-    router.HandleFunc("/auth/sign_out", controllers.SignOut).Methods("GET")
+    router.Handle("/auth/sign_out", session.NewSignOutHandler()).Methods("GET")
 }
 
 func appendAnonymousAuthRouter(router *mux.Router) {
-    router.HandleFunc("/auth/sign_in", controllers.SignIn).Methods("POST")
+    router.Handle("/auth/sign_in", session.NewSignInHandler()).Methods("POST")
 }

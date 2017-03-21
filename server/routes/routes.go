@@ -21,7 +21,7 @@ func Router() *mux.Router {
 
     router.PathPrefix(apiPath).Handler(
         negroni.New(
-            negroni.HandlerFunc(middleware.RequireAuth),
+            middleware.NewRequiredAuthHandler(),
             negroni.Wrap(authRouter),
         ),
     )
