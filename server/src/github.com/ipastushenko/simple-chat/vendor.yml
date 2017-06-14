@@ -1,0 +1,11 @@
+vendors:
+- path: github.com/dgrijalva/jwt-go
+  rev: a539ee1a749a2b895533f979515ac7e6e0f5b650
+- path: github.com/gorilla/context
+  rev: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- path: github.com/gorilla/mux
+  rev: 18fca31550181693b3a834a15b74b564b3605876
+- path: github.com/urfave/negroni
+  rev: 3019daf414cfd2c51de68c3a535707c0de6e3d83
+- path: golang.org/x/crypto
+  rev: 850760c427c516be930bc91280636328f1a62286

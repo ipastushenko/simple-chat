@@ -20,9 +20,11 @@ Learning Golang(https://golang.org/) for api implementation and ReactJS(https://
 2. Run `cd <project_dir>`
 
 ### run docker container for compiling and running of server
-3. Run `docker-compose exec server bash`
+1. Run `docker-compose exec server bash`
 3. Run `cd src/github.com/ipastushenko/simple-chat`
+3. Run `go get -u github.com/govend/govend` to install package manager
+3. Run `govend -v` to download dependencies
 
 ### develoment server cycle commands
-4. Run `go install` for compiling and installing of server in docker container
+1. Run `go install` for compiling and installing of server in docker container
 4. Run `simple-chat` for starting of server
