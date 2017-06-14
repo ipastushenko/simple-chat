@@ -14,6 +14,11 @@ var upgrader = websocket.Upgrader{
 
 type WebSocketHandler struct {}
 
+type Data struct {
+    Id int `json:"id"`
+    Test interface{} `json:"test"`
+}
+
 func NewWebSocketHandler() *WebSocketHandler {
     return &WebSocketHandler{}
 }
@@ -30,18 +35,19 @@ func (handler *WebSocketHandler) ServeHTTP(
     }
 
     defer connection.Close()
+    data := Data{}
     for {
-        messageType, message, err := connection.ReadMessage()
+        err := connection.ReadJSON(&data)
 
         if err != nil {
             log.Println("read: ", err.Error())
             break
         }
 
-        log.Printf("recv: %s", message)
-        err = connection.WriteMessage(messageType, message)
+        log.Printf("recv: ", data)
+        err = connection.WriteJSON(data)
         if err != nil {
-            log.Println("write: ", err)
+            log.Println("write: ", err.Error())
             break
         }
     }
