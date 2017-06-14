@@ -11,17 +11,15 @@ Learning Golang(https://golang.org/) for api implementation and ReactJS(https://
 ### env and config files
 1. Run `cp .go.env.example .go.env`
 2. Modify `.go.env` file as you wish
-2. Run `cd server/src/github.com/ipastushenko/simple-chat`
 2. Run `cp settings/env.json.example settings/development.json`
 2. Modify `development.json` file as you wish
-2. Run `mkdir settings/secret && cd settings/secret`
+2. Run `mkdir server/settings/secret && cd server/settings/secret`
 2. Run `openssl genrsa -out jwt.rsa 1024`
 2. Run `openssl rsa -in jwt.rsa -pubout > jwt.rsa.pub`
-2. Run `cd <project_dir>`
+2. Run `cd ../../..`
 
 ### run docker container for compiling and running of server
 1. Run `docker-compose exec server bash`
-3. Run `cd src/github.com/ipastushenko/simple-chat`
 3. Run `go get -u github.com/govend/govend` to install package manager
 3. Run `govend -v` to download dependencies
 

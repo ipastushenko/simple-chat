@@ -1,5 +1,3 @@
-/src/github.com/ipastushenko/simple-chat/settings/*.json
-/src/github.com/ipastushenko/simple-chat/settings/secret
-/src/github.com/govend
-/src/github.com/ipastushenko/simple-chat/vendor
-/bin
+/settings/*.json
+/settings/secret
+/vendor
