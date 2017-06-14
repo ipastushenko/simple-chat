@@ -25,12 +25,12 @@ func (handler *RequiredAuthHandler) ServeHTTP (
     next http.HandlerFunc,
 ) {
     query := request.URL.Query()
-    auth_token := query.Get(authTokenParamName)
-    if auth_token == "" {
+    authToken := query.Get(authTokenParamName)
+    if authToken == "" {
         responseWriter.WriteHeader(http.StatusUnauthorized)
         return
     }
-    if token, ok := handler.TokenService.ParseToken(auth_token); ok {
+    if token, ok := handler.TokenService.ParseToken(authToken); ok {
         newRequest := handler.TokenService.UpdateRequestContext(token, request)
         next(responseWriter, newRequest)
     } else {
