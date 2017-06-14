@@ -116,7 +116,7 @@ func (service *JWTService) RevokeOtherTokens(string) error {
 }
 
 func getInstance() ITokenService {
-    once.Do(func() {        
+    once.Do(func() {
         service = &JWTService{secret: &jwtSecret{}}
         service.loadSecretKey()
         service.loadVerifyKey()

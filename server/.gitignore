@@ -1,0 +1,3 @@
+/src/github.com/ipastushenko/simple-chat/settings/*.json
+/src/github.com/ipastushenko/simple-chat/settings/secret
+/bin

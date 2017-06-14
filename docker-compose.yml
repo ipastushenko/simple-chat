@@ -5,5 +5,5 @@ services:
       context: .
       dockerfile: ./docker/golang/Dockerfile
     volumes:
-      - ./server:/go/src/github.com/ipastushenko/simple-chat/
+      - ./server:/go
     env_file: .go.env

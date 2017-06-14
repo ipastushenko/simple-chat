@@ -3,4 +3,4 @@ services:
   server:
     ports:
       - 8080:8080
-    command: /bin/bash -c "tail -f /var/log/dmesg"
+    command: /bin/bash -c "touch /home/dockeruser/tail.log && tail -f /home/dockeruser/tail.log"
