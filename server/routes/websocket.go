@@ -5,6 +5,6 @@ import (
     "github.com/ipastushenko/simple-chat/controllers/websocket"
 )
 
-func appendAnonymousWebSocketRouter(router *mux.Router) {
-    router.Handle("/websocket", websocket.NewWebSocketHandler())
+func appendAuthWebSocketRouter(router *mux.Router) {
+    router.Handle("/websocket", websocket.NewWebSocketHandler()).Methods("GET")
 }
