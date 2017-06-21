@@ -17,8 +17,9 @@ func Router() *mux.Router {
     anonymousRouter := router.PathPrefix(apiPath).Subrouter()
 
     appendAuthAuthRouter(authRouter)
+    appendAuthWebSocketRouter(authRouter)
+
     appendAnonymousAuthRouter(anonymousRouter)
-    appendAuthWebSocketRouter(anonymousRouter)
 
     router.PathPrefix(apiPath).Handler(
         negroni.New(

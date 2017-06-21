@@ -4,6 +4,8 @@ import(
     "net/http"
     "log"
     "github.com/gorilla/websocket"
+    wss "github.com/ipastushenko/simple-chat/services/websocket"
+    "github.com/ipastushenko/simple-chat/services/token"
 )
 
 var upgrader = websocket.Upgrader{
@@ -12,15 +14,16 @@ var upgrader = websocket.Upgrader{
     },
 }
 
-type WebSocketHandler struct {}
-
-type Data struct {
-    Id int `json:"id"`
-    Test interface{} `json:"test"`
+type WebSocketHandler struct {
+    webSocketService wss.IWebSocketService
+    tokenService token.ITokenService
 }
 
 func NewWebSocketHandler() *WebSocketHandler {
-    return &WebSocketHandler{}
+    return &WebSocketHandler{
+        webSocketService: wss.NewWebSocketService(),
+        tokenService: token.NewJWTService(),
+    }
 }
 
 func (handler *WebSocketHandler) ServeHTTP(
@@ -28,27 +31,11 @@ func (handler *WebSocketHandler) ServeHTTP(
     request *http.Request,
 ) {
     connection, err := upgrader.Upgrade(responseWriter, request, nil)
-
     if err != nil {
         log.Println(err.Error())
+        responseWriter.WriteHeader(http.StatusInternalServerError)
         return
     }
-
-    defer connection.Close()
-    data := Data{}
-    for {
-        err := connection.ReadJSON(&data)
-
-        if err != nil {
-            log.Println("read: ", err.Error())
-            break
-        }
-
-        log.Printf("recv: ", data)
-        err = connection.WriteJSON(data)
-        if err != nil {
-            log.Println("write: ", err.Error())
-            break
-        }
-    }
+    info := handler.tokenService.GetRequestContextInfo(request)
+    handler.webSocketService.InitConnection(connection, info)
 }

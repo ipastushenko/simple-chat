@@ -13,10 +13,6 @@ type SignOutHandler struct {
     tokenService token.ITokenService
 }
 
-type signOutResponse struct {
-    UserId int `json:"user_id"`
-}
-
 func NewSignOutHandler() *SignOutHandler {
     return &SignOutHandler{
         sessionService: session.NewSessionService(),
