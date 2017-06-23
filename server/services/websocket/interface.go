@@ -6,4 +6,5 @@ import (
 
 type IWebSocketService interface {
     InitConnection(*websocket.Conn, interface {})
+    Broadcast(*BroadcastInfo)
 }
