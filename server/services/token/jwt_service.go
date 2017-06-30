@@ -45,7 +45,7 @@ func (service *JWTService) GenerateToken(info interface{}) (string, error) {
     token := jwt.New(jwt.SigningMethodRS256)
 
     timeNow := time.Now()
-    expirationTime := time.Duration(config.Server.TokenExpiration)
+    expirationTime := time.Duration(config.GetInt("TokenExpiration"))
     exp := timeNow.Add(expirationTime * time.Minute).Unix()
     iat := timeNow.Unix()
     token.Claims = &JWTClaims{
@@ -127,7 +127,7 @@ func getInstance() ITokenService {
 
 func (service *JWTService) loadSecretKey() {
     config := settings.GetInstance()
-    secretKey, err := ioutil.ReadFile(config.Server.SecretKeyPath)
+    secretKey, err := ioutil.ReadFile(config.GetString("SecretKeyPath"))
     if err != nil {
         panic(err)
     }
@@ -142,7 +142,7 @@ func (service *JWTService) loadSecretKey() {
 
 func (service *JWTService) loadVerifyKey() {
     config := settings.GetInstance()
-    verifyKey, err := ioutil.ReadFile(config.Server.VerifyKeyPath)
+    verifyKey, err := ioutil.ReadFile(config.GetString("VerifyKeyPath"))
     if err != nil {
         panic(err)
     }

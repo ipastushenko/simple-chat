@@ -1,14 +1,50 @@
 package settings
 
-type Server struct {
-    Port int `json:"port"`
-    SecretKeyPath string `json:"secret_key_path"`
-    VerifyKeyPath string `json:"verify_key_path"`
-    TokenExpiration int `json:"token_expiration"`
+import (
+    "sync"
+    "os"
+    "log"
+    "fmt"
+    "github.com/spf13/viper"
+)
+
+const (
+    defaultEnv string = "development"
+    envName string = "GO_ENV"
+    configPath = "./settings"
+    configType = "json"
+)
+
+var (
+    conf *viper.Viper
+    once sync.Once
+)
+
+func GetInstance() *viper.Viper {
+    once.Do(func() {
+        conf = viper.New()
+        initSettings()
+    })
+
+    return conf
 }
 
-type Config struct {
-    Env string
-    Server Server `json:"server"`
-    ApiVersion string `json:"apiVersion"`
+func goEnv() string {
+    if env, ok := os.LookupEnv(envName); ok {
+        return env
+    }
+
+    return defaultEnv
+}
+
+func initSettings() {
+    conf.Set("Env", goEnv())
+    conf.AddConfigPath(configPath)
+    conf.SetConfigType(configType)
+    conf.SetConfigName(fmt.Sprintf("config.%v", conf.GetString("Env")))
+    err := conf.ReadInConfig()
+    if err != nil {
+        log.Println(err.Error())
+        os.Exit(1)
+    }
 }

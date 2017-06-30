@@ -1,3 +1,4 @@
 /settings/*.json
 /settings/secret
+!/settings/config.example.json
 /vendor

@@ -1,13 +1,49 @@
 vendors:
+- path: github.com/BurntSushi/toml
+  rev: a368813c5e648fee92e5f6c30e3944ff9d5e8895
+- path: github.com/davecgh/go-spew
+  rev: 782f4967f2dc4564575ca782fe2d04090b5faca8
 - path: github.com/dgrijalva/jwt-go
   rev: a539ee1a749a2b895533f979515ac7e6e0f5b650
+- path: github.com/fsnotify/fsnotify
+  rev: 4da3e2cfbabc9f751898f250b49f2439785783a1
 - path: github.com/gorilla/context
   rev: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - path: github.com/gorilla/mux
   rev: 18fca31550181693b3a834a15b74b564b3605876
 - path: github.com/gorilla/websocket
   rev: a91eba7f97777409bc2c443f5534d41dd20c5720
+- path: github.com/hashicorp/hcl
+  rev: 392dba7d905ed5d04a5794ba89f558b27e2ba1ca
+- path: github.com/magiconair/properties
+  rev: 51463bfca2576e06c62a8504b5c0f06d61312647
+- path: github.com/mitchellh/mapstructure
+  rev: d0303fe809921458f417bcf828397a65db30a7e4
+- path: github.com/pelletier/go-toml
+  rev: 69d355db5304c0f7f809a2edc054553e7142f016
+- path: github.com/pmezard/go-difflib
+  rev: 792786c7400a136282c1664665ae0a8db921c6c2
+- path: github.com/spf13/afero
+  rev: 9be650865eab0c12963d8753212f4f9c66cdcf12
+- path: github.com/spf13/cast
+  rev: acbeb36b902d72a7a4c18e8f3241075e7ab763e4
+- path: github.com/spf13/jwalterweatherman
+  rev: 0efa5202c04663c757d84f90f5219c1250baf94f
+- path: github.com/spf13/pflag
+  rev: e57e3eeb33f795204c1ca35f56c44f83227c6e66
+- path: github.com/spf13/viper
+  rev: c1de95864d73a5465492829d7cb2dd422b19ac96
+- path: github.com/stretchr/testify
+  rev: f6abca593680b2315d2075e0f5e2a9751e3f431a
 - path: github.com/urfave/negroni
   rev: 3019daf414cfd2c51de68c3a535707c0de6e3d83
 - path: golang.org/x/crypto
   rev: 850760c427c516be930bc91280636328f1a62286
+- path: golang.org/x/sys
+  rev: 90796e5a05ce440b41c768bd9af257005e470461
+- path: golang.org/x/text
+  rev: 2bf8f2a19ec09c670e931282edfe6567f6be21c9
+- path: gopkg.in/check.v1
+  rev: 20d25e2804050c1cd24a7eea1e7a6447dd0e74ec
+- path: gopkg.in/yaml.v2
+  rev: cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b
