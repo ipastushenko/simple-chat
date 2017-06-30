@@ -1,6 +1,6 @@
 package session
 
-import "github.com/ipastushenko/simple-chat/services/auth"
+import "github.com/ipastushenko/simple-chat/server/services/auth"
 
 type ISessionService interface {
     SignIn(auth.IUserCredentials) (interface{}, bool)

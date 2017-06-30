@@ -2,7 +2,7 @@ package routes
 
 import (
     "github.com/gorilla/mux"
-    "github.com/ipastushenko/simple-chat/controllers/session"
+    "github.com/ipastushenko/simple-chat/server/controllers/session"
 )
 
 func appendAuthAuthRouter(router *mux.Router) {

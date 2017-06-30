@@ -2,9 +2,9 @@ package session
 
 import (
     "sync"
-    "github.com/ipastushenko/simple-chat/models"
-    "github.com/ipastushenko/simple-chat/services/auth"
-    "github.com/ipastushenko/simple-chat/services/token"
+    "github.com/ipastushenko/simple-chat/server/models"
+    "github.com/ipastushenko/simple-chat/server/services/auth"
+    "github.com/ipastushenko/simple-chat/server/services/token"
 )
 
 type SessionService struct {

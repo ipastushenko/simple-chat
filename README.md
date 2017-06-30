@@ -25,4 +25,4 @@ Learning Golang(https://golang.org/) for api implementation and ReactJS(https://
 
 ### develoment server cycle commands
 1. Run `go install` for compiling and installing of server in docker container
-4. Run `simple-chat` for starting of server
+4. Run `server` for starting of server

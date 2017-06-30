@@ -2,7 +2,7 @@ package middleware
 
 import (
     "net/http"
-    "github.com/ipastushenko/simple-chat/services/token"
+    "github.com/ipastushenko/simple-chat/server/services/token"
 )
 
 const (

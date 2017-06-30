@@ -2,7 +2,7 @@ package routes
 
 import (
     "github.com/gorilla/mux"
-    "github.com/ipastushenko/simple-chat/controllers/websocket"
+    "github.com/ipastushenko/simple-chat/server/controllers/websocket"
 )
 
 func appendAuthWebSocketRouter(router *mux.Router) {

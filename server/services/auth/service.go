@@ -3,7 +3,7 @@ package auth
 import (
     "sync"
     "golang.org/x/crypto/bcrypt"
-    "github.com/ipastushenko/simple-chat/models"
+    "github.com/ipastushenko/simple-chat/server/models"
 )
 
 //TODO: test user

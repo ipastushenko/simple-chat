@@ -10,7 +10,7 @@ import (
     "crypto/x509"
     "context"
     jwt "github.com/dgrijalva/jwt-go"
-    "github.com/ipastushenko/simple-chat/settings"
+    "github.com/ipastushenko/simple-chat/server/settings"
 )
 
 type JWTClaims struct {

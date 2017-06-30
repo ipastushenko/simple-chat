@@ -3,8 +3,8 @@ package session
 import(
     "net/http"
     "encoding/json"
-    "github.com/ipastushenko/simple-chat/services/session"
-    "github.com/ipastushenko/simple-chat/services/token"
+    "github.com/ipastushenko/simple-chat/server/services/session"
+    "github.com/ipastushenko/simple-chat/server/services/token"
 )
 
 //TODO: temp signout handler response

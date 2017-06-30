@@ -4,8 +4,8 @@ import(
     "net/http"
     "log"
     "github.com/gorilla/websocket"
-    wss "github.com/ipastushenko/simple-chat/services/websocket"
-    "github.com/ipastushenko/simple-chat/services/token"
+    wss "github.com/ipastushenko/simple-chat/server/services/websocket"
+    "github.com/ipastushenko/simple-chat/server/services/token"
 )
 
 var upgrader = websocket.Upgrader{

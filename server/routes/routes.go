@@ -4,8 +4,8 @@ import (
     "fmt"
     "github.com/gorilla/mux"
     "github.com/urfave/negroni"
-    "github.com/ipastushenko/simple-chat/middleware"
-    "github.com/ipastushenko/simple-chat/settings"
+    "github.com/ipastushenko/simple-chat/server/middleware"
+    "github.com/ipastushenko/simple-chat/server/settings"
 )
 
 func Router() *mux.Router {

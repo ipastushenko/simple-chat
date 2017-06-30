@@ -4,8 +4,8 @@ import(
     "net/http"
     "encoding/json"
     "log"
-    "github.com/ipastushenko/simple-chat/models"
-    "github.com/ipastushenko/simple-chat/services/session"
+    "github.com/ipastushenko/simple-chat/server/models"
+    "github.com/ipastushenko/simple-chat/server/services/session"
 )
 
 type SignInHandler struct {

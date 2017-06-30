@@ -4,9 +4,9 @@ import (
     "log"
     "fmt"
     "net/http"
-    "github.com/ipastushenko/simple-chat/settings"
-    "github.com/ipastushenko/simple-chat/routes"
-    "github.com/ipastushenko/simple-chat/middleware"
+    "github.com/ipastushenko/simple-chat/server/settings"
+    "github.com/ipastushenko/simple-chat/server/routes"
+    "github.com/ipastushenko/simple-chat/server/middleware"
 )
 
 func main () {
