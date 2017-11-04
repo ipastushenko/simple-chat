@@ -10,7 +10,7 @@ import (
 
 func Router() *mux.Router {
     config := settings.GetInstance()
-    apiPath := fmt.Sprintf("/api/%v", config.GetString("ApiVersion"))
+    apiPath := fmt.Sprintf("/api/%v", config.GetString("api_version"))
 
     router := mux.NewRouter()
     authRouter := mux.NewRouter().PathPrefix(apiPath).Subrouter()

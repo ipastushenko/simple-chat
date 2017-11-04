@@ -16,12 +16,12 @@ func main () {
     serverMiddleware.UseHandler(router)
     log.Printf(
         "%v server has been started on %v port",
-        config.GetString("Env"),
-        config.GetInt("Port"),
+        config.GetString("env"),
+        config.GetInt("port"),
     )
     log.Fatal(
         http.ListenAndServe(
-            fmt.Sprintf(":%v", config.GetInt("Port")),
+            fmt.Sprintf(":%v", config.GetInt("port")),
             serverMiddleware,
         ),
     )

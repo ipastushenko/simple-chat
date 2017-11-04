@@ -27,5 +27,5 @@ _testmain.go
 *.swp
 
 # env files
-.go.env
+.env
 docker-compose.override.yml

@@ -1,7 +1,0 @@
-{
-    "port": 8080,
-    "secretKeyPath": "settings/secret/jwt.rsa",
-    "verifyKeyPath": "settings/secret/jwt.rsa.pub",
-    "tokenExpiration": 1,
-    "apiVersion": "v1"
-}
