@@ -4,6 +4,7 @@ import (
     "github.com/gorilla/websocket"
     "log"
     "time"
+    "encoding/json"
 )
 
 const (
@@ -12,9 +13,49 @@ const (
     pingPeriod = (pongTimeout * 9) / 10
 )
 
-type Message struct{
+var events map[string]func()IMessageData
+
+events = {
+    "id": func() IMessageData { return new(Data2) },
+    "name": func() IMessageData { return new(Data1) },
+}
+
+type IMessageData interface {}
+
+type Data1 struct {
+    Name string `json:"name"`
+}
+
+type Data2 struct {
     Id int `json:"id"`
+}
+
+type Message struct {
     Event string `json:"event"`
+    Data IMessageData `json:"data"`
+}
+
+type RawMessage struct {
+    Event string `json:"event"`
+    Data json.RawMessage `json:"data"`
+}
+
+func (message *Message) UnmarshalJSON(b []byte) error {
+    rawMessage := RawMessage{}
+    err := json.Unmarshal(b, &rawMessage)
+    if err != nil {
+        return err
+    }
+    data := events[rawMessage.Event]()
+    err = json.Unmarshal(rawMessage.Data, &data)
+    if err != nil {
+        return err
+    }
+
+    message.Event = rawMessage.Event
+    message.Data = data
+
+    return nil
 }
 
 type Client struct {
