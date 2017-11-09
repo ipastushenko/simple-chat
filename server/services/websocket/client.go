@@ -13,47 +13,32 @@ const (
     pingPeriod = (pongTimeout * 9) / 10
 )
 
-var events map[string]func()IMessageData
-
-events = {
-    "id": func() IMessageData { return new(Data2) },
-    "name": func() IMessageData { return new(Data1) },
-}
-
-type IMessageData interface {}
-
-type Data1 struct {
-    Name string `json:"name"`
-}
-
-type Data2 struct {
-    Id int `json:"id"`
-}
-
 type Message struct {
-    Event string `json:"event"`
-    Data IMessageData `json:"data"`
+    Event IEvent
+    EventsService IEventsService
 }
 
-type RawMessage struct {
+type rawMessage struct {
     Event string `json:"event"`
     Data json.RawMessage `json:"data"`
 }
 
 func (message *Message) UnmarshalJSON(b []byte) error {
-    rawMessage := RawMessage{}
-    err := json.Unmarshal(b, &rawMessage)
+    rMessage := rawMessage{}
+    err := json.Unmarshal(b, &rMessage)
     if err != nil {
         return err
     }
-    data := events[rawMessage.Event]()
-    err = json.Unmarshal(rawMessage.Data, &data)
+    event, err := message.EventsService.ResolveEvent(rMessage.Event)
+    if err != nil {
+        return err
+    }
+    err = json.Unmarshal(rMessage.Data, &event)
     if err != nil {
         return err
     }
 
-    message.Event = rawMessage.Event
-    message.Data = data
+    message.Event = event
 
     return nil
 }
@@ -90,7 +75,7 @@ func (client *Client) InitReadHandler() {
         },
     )
 
-    message := Message{}
+    message := Message{EventsService: NewEventsService()}
     for {
         err := client.conn.ReadJSON(&message)
         if err != nil {
@@ -99,8 +84,13 @@ func (client *Client) InitReadHandler() {
             }
             break
         }
-        log.Println(message)
-        client.wss.Broadcast(&BroadcastInfo{message: message})
+        err = message.Event.Handle(client)
+        if err != nil {
+            if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway) {
+                log.Printf("error: %v", err)
+            }
+            break
+        }
     }
 }
 

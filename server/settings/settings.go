@@ -3,6 +3,7 @@ package settings
 import (
     "sync"
     "github.com/spf13/viper"
+    "github.com/ipastushenko/simple-chat/server/services/websocket"
 )
 
 const (
@@ -24,6 +25,12 @@ func GetInstance() *viper.Viper {
 }
 
 func initSettings() {
+    //TODO: temp init of events
+    websocket.NewEventsService().RegisterEvent(
+        "message",
+        websocket.InitMessageEventHandler,
+    )
+
     conf.SetEnvPrefix(envPrefix)
     conf.AutomaticEnv()
 }
